@@ -19,7 +19,7 @@ import { WavRecorder, WavStreamPlayer } from '../lib/wavtools/index.js';
 import { instructions } from '../utils/conversation_config.js';
 import { WavRenderer } from '../utils/wav_renderer';
 
-import { X, Edit, Zap, ArrowUp, ArrowDown } from 'react-feather';
+import { X, Edit, Zap, ArrowUp, ArrowDown, Pause, Play } from 'react-feather';
 import { Button } from '../components/button/Button';
 import { Toggle } from '../components/toggle/Toggle';
 import { Map } from '../components/Map';
@@ -57,6 +57,196 @@ interface RealtimeEvent {
   source: 'client' | 'server';
   count?: number;
   event: { [key: string]: any };
+}
+
+interface Customer {
+  id: string;
+  name: string;
+  situation: string;
+  profile: {
+    // Personal Information
+    ownerName: string;
+    age: number;
+    familyStatus: string;
+    education: string;
+    personalityTraits: string;
+
+    // Business Information
+    businessName: string;
+    businessType: string;
+    yearsFounded: number;
+    location: string;
+    employees: number;
+    annualRevenue: string;
+    
+    // Financial Information
+    creditScore: number;
+    outstandingLoans: string;
+    monthlyExpenses: string;
+    
+    // Current Situation
+    businessChallenges: string;
+    expansionPlans: string;
+    financingNeeds: string;
+    equipmentNeeded: string;
+    estimatedCost: string;
+    
+    // Market Information
+    competitorSituation: string;
+    customerBase: string;
+    
+    // Personal Goals
+    shortTermGoal: string;
+    longTermGoal: string;
+    
+    // Conversation History
+    lastContact: string;
+    previousDiscussions: string;
+  };
+}
+
+const customers: Customer[] = [
+  {
+    id: '1',
+    name: 'Tony Pepperoni',
+    situation: 'Seeking equipment upgrade and expansion financing',
+    profile: {
+      // Personal Information
+      ownerName: "Tony Pepperoni",
+      age: 42,
+      familyStatus: "Married with two children (ages 10 and 8)",
+      education: "Bachelor's degree in Business Administration",
+      personalityTraits: "Friendly, hardworking, cautious with finances, passionate about pizza",
+
+      // Business Information
+      businessName: "Tony's Pizzeria",
+      businessType: "Family-owned Pizza Restaurant",
+      yearsFounded: 2019,
+      location: "Downtown area with high foot traffic",
+      employees: 12,
+      annualRevenue: "$500,000",
+      
+      // Financial Information
+      creditScore: 720,
+      outstandingLoans: "$50,000 for initial restaurant setup",
+      monthlyExpenses: "$35,000 including rent, utilities, and staff wages",
+      
+      // Current Situation
+      businessChallenges: "Increasing ingredient costs, need for kitchen equipment upgrade",
+      expansionPlans: "Considering opening a second location in the suburbs",
+      financingNeeds: "Equipment upgrade and possible expansion",
+      equipmentNeeded: "New pizza oven, dough mixer, and refrigeration units",
+      estimatedCost: "$75,000 for equipment, $200,000 for new location",
+      
+      // Market Information
+      competitorSituation: "Two other pizzerias in the area, but known for lower quality",
+      customerBase: "Loyal local customers, growing takeout and delivery business",
+      
+      // Personal Goals
+      shortTermGoal: "Upgrade equipment to improve efficiency and quality",
+      longTermGoal: "Expand to multiple locations across the city",
+      
+      // Conversation History
+      lastContact: "2024-03-15",
+      previousDiscussions: "Briefly discussed equipment financing options",
+    }
+  },
+  {
+    id: '2',
+    name: 'Sarah Bloom',
+    situation: 'Looking to expand her flower shop chain',
+    profile: {
+      // Personal Information
+      ownerName: "Sarah Bloom",
+      age: 35,
+      familyStatus: "Single, no children",
+      education: "Associate's degree in Horticulture",
+      personalityTraits: "Creative, ambitious, detail-oriented, eco-conscious",
+
+      // Business Information
+      businessName: "Bloom's Bouquets",
+      businessType: "Boutique Flower Shop Chain",
+      yearsFounded: 2018,
+      location: "Three locations in upscale shopping districts",
+      employees: 20,
+      annualRevenue: "$750,000",
+      
+      // Financial Information
+      creditScore: 780,
+      outstandingLoans: "$100,000 for existing locations",
+      monthlyExpenses: "$55,000 including rent, utilities, and staff wages",
+      
+      // Current Situation
+      businessChallenges: "Managing inventory across multiple locations, seasonal demand fluctuations",
+      expansionPlans: "Opening two new locations in neighboring cities",
+      financingNeeds: "Capital for new store setups and increased inventory",
+      equipmentNeeded: "Refrigeration units, delivery vans",
+      estimatedCost: "$300,000 for new locations and equipment",
+      
+      // Market Information
+      competitorSituation: "Several local florists, but unique in offering eco-friendly and locally-sourced flowers",
+      customerBase: "Environmentally conscious consumers, corporate clients for events",
+      
+      // Personal Goals
+      shortTermGoal: "Streamline operations across all locations",
+      longTermGoal: "Become the leading eco-friendly flower shop chain in the state",
+      
+      // Conversation History
+      lastContact: "2024-02-28",
+      previousDiscussions: "Explored options for eco-friendly packaging and sustainable practices",
+    }
+  },
+  {
+    id: '3',
+    name: 'Mike Wrench',
+    situation: 'Wants to modernize his auto repair shop',
+    profile: {
+      // Personal Information
+      ownerName: "Mike Wrench",
+      age: 50,
+      familyStatus: "Divorced, two adult children",
+      education: "Technical school diploma in Automotive Technology",
+      personalityTraits: "Straightforward, loyal to customers, traditional but open to new ideas",
+
+      // Business Information
+      businessName: "Mike's Auto Care",
+      businessType: "Independent Auto Repair Shop",
+      yearsFounded: 2005,
+      location: "Suburban area with good visibility from main road",
+      employees: 8,
+      annualRevenue: "$600,000",
+      
+      // Financial Information
+      creditScore: 700,
+      outstandingLoans: "$75,000 for previous equipment purchases",
+      monthlyExpenses: "$45,000 including rent, utilities, and staff wages",
+      
+      // Current Situation
+      businessChallenges: "Keeping up with rapidly evolving car technologies, attracting younger customers",
+      expansionPlans: "Modernizing existing shop rather than expanding locations",
+      financingNeeds: "New diagnostic equipment and staff training",
+      equipmentNeeded: "Advanced diagnostic tools, electric vehicle charging station",
+      estimatedCost: "$150,000 for equipment and training programs",
+      
+      // Market Information
+      competitorSituation: "Two franchise auto repair shops nearby, but known for personal service and fair pricing",
+      customerBase: "Loyal long-time customers, mostly middle-aged and older",
+      
+      // Personal Goals
+      shortTermGoal: "Implement a digital system for customer records and scheduling",
+      longTermGoal: "Position the shop as the go-to place for both traditional and electric vehicle repairs",
+      
+      // Conversation History
+      lastContact: "2024-03-10",
+      previousDiscussions: "Inquired about loans for new diagnostic equipment",
+    }
+  }
+];
+
+interface CallSegment {
+  role: string;
+  text: string;
+  audioUrl: string;
 }
 
 export function ConsolePage() {
@@ -169,6 +359,9 @@ export function ConsolePage() {
   });
   const [marker, setMarker] = useState<Coordinates | null>(null);
   const [showAnalysis, setShowAnalysis] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [audioSegments, setAudioSegments] = useState<CallSegment[]>([]);
+  const [isPaused, setIsPaused] = useState(false);
 
   /**
    * Utility for formatting the timing of logs
@@ -237,12 +430,15 @@ export function ConsolePage() {
     if (client.getTurnDetectionType() === 'server_vad') {
       await wavRecorder.record((data) => client.appendInputAudio(data.mono));
     }
+
+    setIsPaused(false); // Ensure we start in an unpaused state
   }, []);
 
   /**
    * Disconnect and reset conversation state
    */
   const disconnectConversation = useCallback(async () => {
+    setIsPaused(false); // Reset pause state
     setIsConnected(false);
     setRealtimeEvents([]);
     setItems([]);
@@ -312,6 +508,7 @@ export function ConsolePage() {
    * .appendInputAudio() for each sample
    */
   const startRecording = async () => {
+    if (isPaused) return; // Don't start recording if paused
     setIsRecording(true);
     const client = clientRef.current;
     const wavRecorder = wavRecorderRef.current;
@@ -328,6 +525,7 @@ export function ConsolePage() {
    * In push-to-talk mode, stop recording
    */
   const stopRecording = async () => {
+    if (isPaused) return; // Don't stop recording if paused
     setIsRecording(false);
     const client = clientRef.current;
     const wavRecorder = wavRecorderRef.current;
@@ -351,6 +549,21 @@ export function ConsolePage() {
       await wavRecorder.record((data) => client.appendInputAudio(data.mono));
     }
     setCanPushToTalk(value === 'none');
+  };
+
+  const togglePause = async () => {
+    if (isPaused) {
+      // Resume
+      setIsPaused(false);
+      if (!canPushToTalk) {
+        // If in VAD mode, restart recording
+        await wavRecorderRef.current.record((data) => clientRef.current.appendInputAudio(data.mono));
+      }
+    } else {
+      // Pause
+      setIsPaused(true);
+      await wavRecorderRef.current.pause();
+    }
   };
 
   /**
@@ -586,10 +799,62 @@ export function ConsolePage() {
       .join('\n');
   };
 
+  const getTranscriptAndAudio = (): CallSegment[] => {
+    return items
+      .filter(item => item.role === 'user' || item.role === 'assistant')
+      .map(item => ({
+        role: item.role as string, // Type assertion to fix the error
+        text: item.formatted.transcript || item.formatted.text || '',
+        audioUrl: item.formatted.file?.url || ''
+      }));
+  };
+
+  const handleCustomerSelect = (customer: Customer) => {
+    setSelectedCustomer(customer);
+    // Reset the conversation and update the AI's memory based on the new customer
+    setItems([]);
+    setMemoryKv(customer.profile);
+    
+    // Update the AI's instructions based on the selected customer
+    const customerInstructions = `You are roleplaying as ${customer.name}, the owner of ${customer.profile.businessName}. 
+    Your current situation is: ${customer.situation}. 
+    Use the information in your profile to inform your responses and behavior.
+    You are speaking with a financial services sales agent who is trying to sell you products or services.
+    Respond as the business owner would, based on your profile, situation, and personality traits.
+    Be realistic in your responses, considering your financial situation, business challenges, and goals.`;
+    
+    clientRef.current.updateSession({ instructions: customerInstructions });
+  };
+
+  const sendMessage = async (message: string) => {
+    // ... existing code
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          memory: memoryKv,
+          customerName: selectedCustomer?.name,
+          customerSituation: selectedCustomer?.situation,
+        }),
+      });
+
+      // ... existing code to handle the response
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   if (showAnalysis) {
+    const audioSegments = getTranscriptAndAudio();
     return (
       <CallAnalysisPage
-        transcript={getTranscript()}
+        transcript={audioSegments.map(segment => `${segment.role}: ${segment.text}`).join('\n')}
+        audioSegments={audioSegments}
         onBack={() => setShowAnalysis(false)}
       />
     );
@@ -603,7 +868,7 @@ export function ConsolePage() {
       <div className="content-top">
         <div className="content-title">
           <img src="/mock-call-agent-logo.png" alt="Mock Call Agent Logo" />
-          <span>Mock Call Agent Console</span>
+          <span>Financial Services Sales Mock Call System</span>
         </div>
         <div className="content-api-key">
           {!LOCAL_RELAY_SERVER_URL && (
@@ -769,20 +1034,24 @@ export function ConsolePage() {
               <Button
                 label={isRecording ? 'release to send' : 'push to talk'}
                 buttonStyle={isRecording ? 'alert' : 'regular'}
-                disabled={!isConnected || !canPushToTalk}
+                disabled={!isConnected || !canPushToTalk || isPaused}
                 onMouseDown={startRecording}
                 onMouseUp={stopRecording}
               />
             )}
             <div className="spacer" />
             <Button
+              label={isPaused ? 'Resume' : 'Pause'}
+              icon={isPaused ? Play : Pause}
+              onClick={togglePause}
+              disabled={!isConnected}
+            />
+            <Button
               label={isConnected ? 'disconnect' : 'connect'}
               iconPosition={isConnected ? 'end' : 'start'}
               icon={isConnected ? X : Zap}
               buttonStyle={isConnected ? 'regular' : 'action'}
-              onClick={
-                isConnected ? disconnectConversation : connectConversation
-              }
+              onClick={isConnected ? disconnectConversation : connectConversation}
             />
             <Button
               label="Analyze Call"
@@ -826,6 +1095,27 @@ export function ConsolePage() {
           </div>
         </div>
       </div>
+      <div className="customer-selection">
+        <h2>Select a Customer to Call:</h2>
+        <p>You are a financial services sales agent. Select a customer to start a mock sales call.</p>
+        {customers.map((customer) => (
+          <button
+            key={customer.id}
+            onClick={() => handleCustomerSelect(customer)}
+            className={selectedCustomer?.id === customer.id ? 'selected' : ''}
+          >
+            {customer.name}
+          </button>
+        ))}
+      </div>
+      {selectedCustomer && (
+        <div className="selected-customer-info">
+          <h3>Current Customer: {selectedCustomer.name}</h3>
+          <p>Business: {selectedCustomer.profile.businessName}</p>
+          <p>Situation: {selectedCustomer.situation}</p>
+          <p>Your goal: Sell appropriate financial services to this customer.</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -281,4 +281,47 @@
       }
     }
   }
+
+  .customer-selection {
+    margin-bottom: 20px;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 8px 16px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+
+      &.selected {
+        background-color: #4CAF50;
+        color: white;
+      }
+    }
+  }
+
+  .selected-customer-info {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    h3 {
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
 }
