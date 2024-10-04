@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Download, Send } from 'react-feather';
+import { ArrowLeft, Download, Send, Save } from 'react-feather';
 import { Button } from '../components/button/Button';
 import './CallAnalysisPage.scss';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources/chat';
+import { v4 as uuidv4 } from 'uuid'; // You'll need to install this package: npm install uuid @types/uuid
 
 interface CallSegment {
   role: string;
@@ -119,12 +120,31 @@ Call Analysis:
     }
   };
 
+  const saveAnalysis = () => {
+    const newAnalysis = {
+      id: uuidv4(),
+      date: new Date().toLocaleString(),
+      transcript,
+      audioSegments,
+      analysis,
+      aiRecommendation,
+      chatMessages
+    };
+
+    const savedAnalyses = JSON.parse(localStorage.getItem('savedAnalyses') || '[]');
+    savedAnalyses.push(newAnalysis);
+    localStorage.setItem('savedAnalyses', JSON.stringify(savedAnalyses));
+
+    alert('Analysis saved successfully!');
+  };
+
   return (
     <div className="call-analysis-page">
       <div className="header">
         <Button icon={ArrowLeft} label="Back" onClick={onBack} />
         <h1>Call Analysis</h1>
         <Button icon={Download} label="Download Analysis" onClick={downloadAnalysis} />
+        <Button icon={Save} label="Save Analysis" onClick={saveAnalysis} />
       </div>
       <div className="content">
         <div className="transcript-section">

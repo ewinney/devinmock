@@ -27,6 +27,7 @@ import { Map } from '../components/Map';
 import './ConsolePage.scss';
 import { isJsxOpeningLikeElement } from 'typescript';
 import { CallAnalysisPage } from './CallAnalysisPage';
+import { SavedAnalysisPage } from './SavedAnalysisPage';
 
 // If the logo is in the public folder, you don't need to import it
 // Remove or comment out the import statement
@@ -362,6 +363,7 @@ export function ConsolePage() {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [audioSegments, setAudioSegments] = useState<CallSegment[]>([]);
   const [isPaused, setIsPaused] = useState(false);
+  const [showSavedAnalyses, setShowSavedAnalyses] = useState(false);
 
   /**
    * Utility for formatting the timing of logs
@@ -442,46 +444,7 @@ export function ConsolePage() {
     setIsConnected(false);
     setRealtimeEvents([]);
     setItems([]);
-    setMemoryKv({
-      // Personal Information
-      ownerName: "Tony Pepperoni",
-      age: 42,
-      familyStatus: "Married with two children (ages 10 and 8)",
-      education: "Bachelor's degree in Business Administration",
-      personalityTraits: "Friendly, hardworking, cautious with finances, passionate about pizza",
-
-      // Business Information
-      businessName: "Tony's Pizzeria",
-      businessType: "Family-owned Pizza Restaurant",
-      yearsFounded: 2019,
-      location: "Downtown area with high foot traffic",
-      employees: 12,
-      annualRevenue: "$500,000",
-      
-      // Financial Information
-      creditScore: 720,
-      outstandingLoans: "$50,000 for initial restaurant setup",
-      monthlyExpenses: "$35,000 including rent, utilities, and staff wages",
-      
-      // Current Situation
-      businessChallenges: "Increasing ingredient costs, need for kitchen equipment upgrade",
-      expansionPlans: "Considering opening a second location in the suburbs",
-      financingNeeds: "Equipment upgrade and possible expansion",
-      equipmentNeeded: "New pizza oven, dough mixer, and refrigeration units",
-      estimatedCost: "$75,000 for equipment, $200,000 for new location",
-      
-      // Market Information
-      competitorSituation: "Two other pizzerias in the area, but known for lower quality",
-      customerBase: "Loyal local customers, growing takeout and delivery business",
-      
-      // Personal Goals
-      shortTermGoal: "Upgrade equipment to improve efficiency and quality",
-      longTermGoal: "Expand to multiple locations across the city",
-      
-      // Conversation History
-      lastContact: "2024-03-15",
-      previousDiscussions: "Briefly discussed equipment financing options",
-    });
+    // Remove the setMemoryKv call to preserve the current memory
     setCoords({
       lat: 37.775593,
       lng: -122.418137,
@@ -849,6 +812,10 @@ export function ConsolePage() {
     }
   };
 
+  if (showSavedAnalyses) {
+    return <SavedAnalysisPage onBack={() => setShowSavedAnalyses(false)} />;
+  }
+
   if (showAnalysis) {
     const audioSegments = getTranscriptAndAudio();
     return (
@@ -1057,6 +1024,10 @@ export function ConsolePage() {
               label="Analyze Call"
               onClick={() => setShowAnalysis(true)}
               disabled={!isConnected || items.length === 0}
+            />
+            <Button
+              label="View Saved Analyses"
+              onClick={() => setShowSavedAnalyses(true)}
             />
           </div>
         </div>
